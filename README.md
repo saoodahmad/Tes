@@ -4,7 +4,7 @@
 
 # Tes Lang
 
-Tes is dynamically typed interpreted object oriented programming language written in typescript
+Tes is dynamically typed interpreted toy programming language written in typescript
 
 ## Parser
 
@@ -12,12 +12,12 @@ Recursive Descent Parser
 
 ## Grammar
 
-### Lexical Grammar
+### Lexer Grammar
 
 ```
-ALPHA          -> "a" ... "z" | "A" ... "Z" | "_" 
-DIGIT          -> "0" ... "9" 
-IDENTIFIER     -> ALPHA ( ALPHA | DIGIT )* 
-NUMBER         -> DIGIT+ ( "." DIGIT+ )? 
-STRING         -> "( any char except "\" )*" 
+ALPHA          -> "a" ... "z" | "A" ... "Z" | "_"
+DIGIT          -> "0" ... "9"
+IDENTIFIER     -> ALPHA ( ALPHA | DIGIT )*
+NUMBER         -> DIGIT+ ( "." DIGIT+ )?
+STRING         -> "( any char except "\" )*"
 ```

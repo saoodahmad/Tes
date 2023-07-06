@@ -1,0 +1,6 @@
+{
+    
+}
+
+// this file is added to  prevent eslint error due to vs code eslint extension at root level level due to absence of tsconfig.json
+// each apps and packages has its own tsconfig

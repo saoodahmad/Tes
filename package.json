@@ -4,20 +4,21 @@
     "version": "1.0.0",
     "description": "A toy programming language written in typescript",
     "scripts": {
-      "build": "turbo run build",
-      "dev": "turbo run dev",
-      "lint": "turbo run lint",
-      "format": "prettier --write \"**/*.{ts,tsx,md}\""
+        "start": "turbo run start",
+        "dev": "turbo run dev",
+        "build": "turbo run build",
+        "test": "turbo run test",
+        "lint": "turbo run lint",
+        "format": "prettier --write \"**/*.{ts,tsx,md}\""
     },
     "devDependencies": {
-      "@turbo/gen": "^1.9.7",
-      "prettier": "^2.5.1",
-      "turbo": "latest"
+        "@turbo/gen": "^1.9.7",
+        "prettier": "^2.5.1",
+        "turbo": "latest"
     },
     "packageManager": "npm@9.5.1",
     "workspaces": [
-      "apps/*",
-      "packages/*"
+        "apps/*",
+        "packages/*"
     ]
-  }
-  
+}
