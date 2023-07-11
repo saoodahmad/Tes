@@ -1,4 +1,5 @@
 import Tes from '../src/Tes'
+import Lexer from '../src/lexer/Lexer'
 
 describe('Lexer Tests', () => {
     describe('Given: Source code has unterminated block comment', () => {
@@ -9,14 +10,15 @@ describe('Lexer Tests', () => {
             /* unterminated block comment
             `.trimEnd()
 
-            Tes.run(src)
+            const lexer = new Lexer(src)
+
+            lexer.lex()
 
             expect(Tes.hasLexerError).toBe(true)
             expect(Tes.error.trimEnd()).toBe(
                 '[Line 2] Lexer Error : Unterminated comment'
             )
             expect(Tes.output).toBe('')
-            expect(Tes.tokens).toHaveLength(0)
         })
     })
 
@@ -28,14 +30,15 @@ describe('Lexer Tests', () => {
             var x = "hhhhhh;
             `.trimEnd()
 
-            Tes.run(src)
+            const lexer = new Lexer(src)
+
+            lexer.lex()
 
             expect(Tes.hasLexerError).toBe(true)
             expect(Tes.error.trimEnd()).toBe(
                 '[Line 2] Lexer Error : Unterminated string'
             )
             expect(Tes.output).toBe('')
-            expect(Tes.tokens).toHaveLength(0)
         })
     })
 
@@ -51,14 +54,15 @@ describe('Lexer Tests', () => {
                 var x = $; // this line will not result in lexer error
             `.trimEnd()
 
-            Tes.run(src)
+            const lexer = new Lexer(src)
+
+            lexer.lex()
 
             expect(Tes.hasLexerError).toBe(true)
             expect(Tes.error.trimEnd()).toBe(
                 `[Line 2] Lexer Error : Unexpected character '@'\n[Line 3] Lexer Error : Unexpected character '#'\n[Line 4] Lexer Error : Unexpected character '$'`
             )
             expect(Tes.output).toBe('')
-            expect(Tes.tokens).toHaveLength(0)
         })
     })
 
@@ -115,14 +119,16 @@ describe('Lexer Tests', () => {
                 println
             `.trimEnd()
 
-            Tes.run(src)
+            const lexer = new Lexer(src)
+
+            const tokens = lexer.lex()
 
             expect(Tes.hasLexerError).toBe(false)
             expect(Tes.error).toBe('')
             expect(Tes.output).toBe('')
-            expect(Tes.tokens).toHaveLength(40)
+            expect(tokens).toHaveLength(40)
 
-            expect(Tes.tokens).toEqual(
+            expect(tokens).toEqual(
                 expect.arrayContaining([
                     expect.objectContaining({
                         type: 'NUMBER',

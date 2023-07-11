@@ -308,6 +308,6 @@ export default class Lexer {
     }
 
     error(line: number, message: string) {
-        Tes.reportLexicalError(line, message)
+        Tes.reportLexerError(line, message)
     }
 }
