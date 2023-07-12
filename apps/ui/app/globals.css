@@ -9,9 +9,6 @@ body {
   /* background-color: 'white'; */
 }
 
-/* .cm-editor { border: 2px solid orange } */
-/* .cm-editor.cm-focused { border: 2px solid blue } */
-
 a {
   text-decoration: none;
   cursor: pointer;
@@ -29,12 +26,6 @@ button {
 .ͼ1b.cm-focused {
   outline: none;
 }
-
-.cm-scroller {
-  /* padding: 4px !important; */
-  /* background-color: f5deb305 */
-}
-
 
 .cm-gutters {
   background-color: #f5deb305 !important;
@@ -57,11 +48,4 @@ button {
 select:not{
   overflow: hidden !important;
 }
-/* a:link, a:visited {
-  background-color: #f44336;
-  color: white;
-  padding: 14px 25px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-} */
+
