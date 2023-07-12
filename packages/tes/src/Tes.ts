@@ -3,11 +3,15 @@ import Token from './grammar/lexer_grammar/Token'
 import TokenKind from './grammar/lexer_grammar/TokenType'
 import Program from './grammar/parser_grammer/Program'
 import Parser from './parser/Parser'
+import InterpreterError from './interpreter/InterpreterError'
+import Interpreter from './interpreter/Interpreter'
 
 class Tes {
     static hasLexerError = false
 
     static hasParserError = false
+
+    static hasInterpreterError = false
 
     static output = ''
 
@@ -24,6 +28,10 @@ class Tes {
 
         if (Tes.hasParserError) {
             return 'Parser'
+        }
+
+        if (Tes.hasInterpreterError) {
+            return 'Interpreter'
         }
 
         return ''
@@ -43,6 +51,11 @@ class Tes {
         }
     }
 
+    static reportInpterpreterError(error: InterpreterError) {
+        Tes.hasInterpreterError = true
+        this.report(error.token.line, '', error.message)
+    }
+
     static run(source: string) {
         const lexer: Lexer = new Lexer(source)
 
@@ -56,12 +69,15 @@ class Tes {
 
         if (Tes.hasParserError) return
 
-        console.log(program)
+        const interpreter = new Interpreter(program)
+
+        interpreter.interpret()
     }
 
     static reset() {
         Tes.hasLexerError = false
         Tes.hasParserError = false
+        Tes.hasInterpreterError = false
         Tes.error = ''
         Tes.output = ''
     }

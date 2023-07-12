@@ -52,8 +52,6 @@ describe('Given: Block statement', () => {
 
             const program = parser.parse()
 
-            console.log(program.declarations[0])
-
             expect(program).toEqual(
                 expect.objectContaining({
                     declarations: expect.arrayContaining([

@@ -95,6 +95,11 @@ export default class Parser {
             } while (this.match([TokenKind.COMMA]))
         }
 
+        if (formalArguments.length > 10) {
+            this.error(this.peek(), 'Too many arguments, max allowed is 10.')
+            return null
+        }
+
         this.consume(
             TokenKind.RIGHT_PAREN,
             "Expected ')' at end of last identifier (argument)."

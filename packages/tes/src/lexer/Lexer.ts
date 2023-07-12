@@ -1,4 +1,5 @@
 import Tes from '../Tes'
+import keywords from '../grammar/lexer_grammar/Keywords'
 import Token from '../grammar/lexer_grammar/Token'
 import TokenKind from '../grammar/lexer_grammar/TokenType'
 
@@ -13,7 +14,7 @@ export default class Lexer {
 
     line = 1
 
-    static readonly keywords: Map<string, TokenKind> = this.initializeKeywords()
+    static readonly keywords: Map<string, TokenKind> = keywords
 
     constructor(sourceCode: string) {
         this.sourceCode = sourceCode
@@ -138,33 +139,6 @@ export default class Lexer {
                 }
                 break
         }
-    }
-
-    static initializeKeywords(): Map<string, TokenKind> {
-        const keywords = new Map<string, TokenKind>()
-
-        keywords.set('and', TokenKind.AND)
-        keywords.set('or', TokenKind.OR)
-
-        keywords.set('true', TokenKind.TRUE)
-        keywords.set('false', TokenKind.FALSE)
-        keywords.set('nil', TokenKind.NIL)
-
-        keywords.set('if', TokenKind.IF)
-        keywords.set('else', TokenKind.ELSE)
-        keywords.set('continue', TokenKind.CONTINUE)
-        keywords.set('break', TokenKind.BREAK)
-        keywords.set('return', TokenKind.RETURN)
-
-        keywords.set('for', TokenKind.FOR)
-        keywords.set('while', TokenKind.WHILE)
-
-        keywords.set('var', TokenKind.VAR)
-        keywords.set('fun', TokenKind.FUN)
-        keywords.set('print', TokenKind.PRINT)
-        keywords.set('println', TokenKind.PRINTLN)
-
-        return keywords
     }
 
     isAtEnd(): boolean {
