@@ -51,7 +51,7 @@ class Tes {
         }
     }
 
-    static reportInpterpreterError(error: InterpreterError) {
+    static reportInterpreterError(error: InterpreterError) {
         Tes.hasInterpreterError = true
         this.report(error.token.line, '', error.message)
     }

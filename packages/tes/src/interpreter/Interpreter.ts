@@ -64,7 +64,7 @@ export default class Interpreter implements visitor<unknown> {
                 this.execute(declaration)
             })
         } catch (error) {
-            Tes.reportInpterpreterError(error)
+            Tes.reportInterpreterError(error)
         }
     }
 
@@ -118,7 +118,9 @@ export default class Interpreter implements visitor<unknown> {
             if (err instanceof Break) {
                 // catch and do nothing
             } else if (err instanceof InterpreterError) {
-                Tes.reportInpterpreterError(err)
+                Tes.reportInterpreterError(err)
+            } else if (err instanceof Return) {
+                throw new Return(err.returnValue)
             }
         }
 
@@ -176,7 +178,9 @@ export default class Interpreter implements visitor<unknown> {
             if (err instanceof Break) {
                 // catch and do nothing
             } else if (err instanceof InterpreterError) {
-                Tes.reportInpterpreterError(err)
+                Tes.reportInterpreterError(err)
+            } else if (err instanceof Return) {
+                throw new Return(err.returnValue)
             }
         }
 
