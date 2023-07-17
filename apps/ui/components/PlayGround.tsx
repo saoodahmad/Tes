@@ -12,34 +12,66 @@ const CodeEditor = dynamic(() => import('@uiw/react-codemirror'), {
 export default function Editor() {
   const templates = [
     {
-      label: 'Hello World!',
-      code: 'println "Hello World!";',
+      label: '1. Hello World!',
+      code:
+        '// Print Hello World!\n\n' +  
+        'println "Hello World!";',
     },
     {
-      label: 'Fizz buzz!',
+      label: '2. Fibonacci!',
       code:
-        'fun fizzBuzz( n ) {\n' +
-        '  if(n % 3 == 0) {\n' +
-        '    print "Fizz";\n' +
-        '  }\n' +
-        '  if(n % 5 == 0) {\n' +
-        '    print "Buzz";\n' +
-        '  }\n' +
-        '}\n' +
-        'var x = 45;\n' +
-        'fizzBuzz(x);',
-    },
-    {
-      label: 'Fibonacci!',
-      code:
+        '/*\n' + 
+        ' Print first 5 fibonacci numbers\n' +
+        '*/\n\n' + 
         'fun fib( n ) {\n' +
         '  if(n <= 1) {\n' +
         '    return n;\n' +
-        '  }\n' +
+        '  }\n\n' +
         '  return fib(n-1) + fib(n-2);\n' +
-        '}\n' +
-        'var x = 3;\n' +
-        'println fib(x);',
+        '}\n\n' +
+        'for (var i = 0; i<5; i = i + 1) {\n' +
+        '  print fib(i);\n'+
+        '  print " ";\n'+
+        '}\n'  
+    },
+    {
+      label: '3. Prime Numbers!',
+      code:
+        '/*\n' + 
+        ' Print first 5 prime numbers starting from 5\n' +
+        '*/\n\n' + 
+        'fun isPrime( n ) {\n' +
+        '  for (var i = 2; i * i <= n; i = i + 1) {\n' +
+        '    if(n % i == 0){\n' +
+        '      return false;\n' +
+        '    }\n' +
+        '  }\n\n' +
+        '  return true;\n' +
+        '}\n\n' + 
+        'var x = 5;\n' + 
+        'var cnt = 0;\n\n' +
+        'while(true){\n' + 
+        '  if(cnt == 5) break;\n\n' +
+        '  if(isPrime(x)) {\n' +
+        '    cnt = cnt + 1;\n' +
+        '    print x;\n' + 
+        '    print " ";\n' + 
+        '  }\n\n' +
+        '  x = x + 1;\n' +
+        '}\n'
+    },
+    {
+      label: '4. Odd Numbers!',
+      code:
+        '/*\n' + 
+        ' Print odd numbers between 1 and 10 (both inclusive)\n' +
+        '*/\n\n' + 
+        'var x = 1;\n\n' + 
+        'for (; x <= 10; x = x + 1) {\n' + 
+        '  if( x % 2 == 0) continue;\n\n' + 
+        '  print x;\n' + 
+        '  println " ";\n' + 
+        '}\n' 
     },
   ];
 
@@ -56,7 +88,7 @@ export default function Editor() {
     setOutput('');
 
     TesLang.run(src);
-
+    
     if (
       TesLang.hasInterpreterError ||
       TesLang.hasParserError ||
