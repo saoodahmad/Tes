@@ -28,7 +28,7 @@ describe('Given: Function declaration and call', () => {
             expect(Tes.hasInterpreterError).toBe(true)
 
             expect(Tes.error.trimEnd()).toBe(
-                '[Line 2] Interpreter Error : min is an inbuilt function.'
+                "[Line 2] Interpreter Error at 'min': min is an inbuilt function."
             )
             expect(Tes.output).toBe('')
         })
@@ -55,7 +55,7 @@ describe('Given: Function declaration and call', () => {
             expect(Tes.hasInterpreterError).toBe(true)
 
             expect(Tes.error.trimEnd()).toBe(
-                "[Line 2] Interpreter Error : Undefined identifier 'add'."
+                "[Line 2] Interpreter Error at 'add': Undefined identifier 'add'."
             )
             expect(Tes.output).toBe('')
         })
@@ -83,7 +83,7 @@ describe('Given: Function declaration and call', () => {
             expect(Tes.hasInterpreterError).toBe(true)
 
             expect(Tes.error.trimEnd()).toBe(
-                '[Line 3] Interpreter Error : Can only call functions.'
+                "[Line 3] Interpreter Error at ')': Can only call functions."
             )
             expect(Tes.output).toBe('')
         })
@@ -113,7 +113,37 @@ describe('Given: Function declaration and call', () => {
             expect(Tes.hasInterpreterError).toBe(true)
 
             expect(Tes.error.trimEnd()).toBe(
-                '[Line 5] Interpreter Error : Expected 2 arguments but got 3.'
+                "[Line 5] Interpreter Error at ')': Expected 2 arguments but got 3."
+            )
+            expect(Tes.output).toBe('')
+        })
+
+        // eslint-disable-next-line jest/no-identical-title
+        it('Return interpreter error', () => {
+            Tes.reset()
+            const tokens = new Lexer(`
+                    fun add(x, y) {
+                        print x + y + " ";
+                    }
+                    add(3, 2);
+                `).lex()
+
+            expect(Tes.hasLexerError).toBe(false)
+
+            const parser = new Parser(tokens)
+
+            const program = parser.parse()
+
+            expect(Tes.hasParserError).toBe(false)
+
+            const interpreter = new Interpreter(program)
+
+            interpreter.interpret()
+
+            expect(Tes.hasInterpreterError).toBe(true)
+
+            expect(Tes.error.trimEnd()).toBe(
+                "[Line 3] Interpreter Error at '+': Operands must be two numbers or two strings."
             )
             expect(Tes.output).toBe('')
         })
@@ -173,6 +203,49 @@ describe('Given: Function declaration and call', () => {
             expect(Tes.hasInterpreterError).toBe(false)
             expect(Tes.error).toBe('')
             expect(Tes.output).toBe('5')
+        })
+
+        // eslint-disable-next-line jest/no-identical-title
+        it('Return output', () => {
+            Tes.reset()
+            const tokens = new Lexer(`
+                fun add(x, y) {
+
+                    for(var i =0; i < 3; i = i + 1) {
+                        for(var j = 0; j<3; j = j + 1) {
+                            if( j > 1) {
+                                return ;
+                            }
+
+                            print j;
+                            print " ";
+                        }
+
+                        println "exited j loop";
+                    }
+                    
+                    println "exited i loop";
+
+                    return ;
+                }
+                add(2,3);
+            `).lex()
+
+            expect(Tes.hasLexerError).toBe(false)
+
+            const parser = new Parser(tokens)
+
+            const program = parser.parse()
+
+            expect(Tes.hasParserError).toBe(false)
+
+            const interpreter = new Interpreter(program)
+
+            interpreter.interpret()
+
+            expect(Tes.hasInterpreterError).toBe(false)
+            expect(Tes.error).toBe('')
+            expect(Tes.output.trimEnd()).toBe('0 1')
         })
     })
 })

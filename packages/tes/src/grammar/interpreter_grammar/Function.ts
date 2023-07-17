@@ -3,6 +3,8 @@ import FunctionDeclaration from '../parser_grammer/declaration/FunctionDeclarati
 import Callable from './Callable'
 import Interpreter from '../../interpreter/Interpreter'
 import Return from './Return'
+import InterpreterError from '../../interpreter/InterpreterError'
+import Break from './Break'
 
 export default class Function implements Callable {
     private readonly declaration: FunctionDeclaration
@@ -30,6 +32,12 @@ export default class Function implements Callable {
         } catch (error) {
             if (error instanceof Return) {
                 return error.returnValue
+            }
+            if (error instanceof InterpreterError) {
+                throw new InterpreterError(error.token, error.message)
+            }
+            if (error instanceof Break) {
+                throw new Break()
             }
         }
 

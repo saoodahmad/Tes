@@ -26,7 +26,7 @@ describe('Given: Variable declaration, assignment and variable expression', () =
             expect(Tes.hasInterpreterError).toBe(true)
 
             expect(Tes.error.trimEnd()).toBe(
-                "[Line 2] Interpreter Error : Undefined identifier 'x'."
+                "[Line 2] Interpreter Error at 'x': Undefined identifier 'x'."
             )
 
             expect(Tes.output).toBe(``)
@@ -54,7 +54,7 @@ describe('Given: Variable declaration, assignment and variable expression', () =
             expect(Tes.hasInterpreterError).toBe(true)
 
             expect(Tes.error.trimEnd()).toBe(
-                "[Line 2] Interpreter Error : Undefined identifier 'x'."
+                "[Line 2] Interpreter Error at 'x': Undefined identifier 'x'."
             )
 
             expect(Tes.output).toBe(``)
@@ -83,7 +83,7 @@ describe('Given: Variable declaration, assignment and variable expression', () =
             expect(Tes.hasInterpreterError).toBe(true)
 
             expect(Tes.error.trimEnd()).toBe(
-                '[Line 3] Interpreter Error : Operands must be two numbers or two strings.'
+                "[Line 3] Interpreter Error at '+': Operands must be two numbers or two strings."
             )
 
             expect(Tes.output).toBe(``)

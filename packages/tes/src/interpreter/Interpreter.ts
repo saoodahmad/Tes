@@ -118,8 +118,10 @@ export default class Interpreter implements visitor<unknown> {
             if (err instanceof Break) {
                 // catch and do nothing
             } else if (err instanceof InterpreterError) {
-                Tes.reportInterpreterError(err)
+                // throw the error to above level
+                throw new InterpreterError(err.token, err.message)
             } else if (err instanceof Return) {
+                // throw the error to above level
                 throw new Return(err.returnValue)
             }
         }
@@ -178,7 +180,7 @@ export default class Interpreter implements visitor<unknown> {
             if (err instanceof Break) {
                 // catch and do nothing
             } else if (err instanceof InterpreterError) {
-                Tes.reportInterpreterError(err)
+                throw new InterpreterError(err.token, err.message)
             } else if (err instanceof Return) {
                 throw new Return(err.returnValue)
             }
@@ -273,7 +275,7 @@ export default class Interpreter implements visitor<unknown> {
                 this.checkNumberOperands(expression.operator, left, right)
                 return Number(left) <= Number(right)
             case TokenKind.MINUS:
-                this.checkNumberOperand(expression.operator, right)
+                this.checkNumberOperands(expression.operator, left, right)
                 return Number(left) - Number(right)
             case TokenKind.PLUS:
                 if (typeof left === 'number' && typeof right === 'number') {
@@ -290,7 +292,7 @@ export default class Interpreter implements visitor<unknown> {
                 )
             case TokenKind.SLASH:
                 this.checkNumberOperands(expression.operator, left, right)
-                if (right === 0) {
+                if (Number(right) === 0) {
                     return this.error(
                         expression.operator,
                         'Cannot divide by zero.'
@@ -329,9 +331,11 @@ export default class Interpreter implements visitor<unknown> {
     }
 
     checkNumberOperand(operator: Token, operand: unknown): unknown {
-        if (!Number.isNaN(operand)) return null
+        if (Number.isNaN(Number(operand))) {
+            return this.error(operator, 'Operand must be a number.')
+        }
 
-        return this.error(operator, 'Operand must be a number.')
+        return null
     }
 
     checkNumberOperands(
@@ -339,8 +343,11 @@ export default class Interpreter implements visitor<unknown> {
         left: unknown,
         right: unknown
     ): unknown {
-        if (!Number.isNaN(left) && !Number.isNaN(right)) return null
-        return this.error(operator, 'Operands must be a number.')
+        if (Number.isNaN(Number(left)) || Number.isNaN(Number(right))) {
+            return this.error(operator, 'Operands must be two numbers.')
+        }
+
+        return null
     }
 
     visitLiteralExpression(expression: LiteralExpression): unknown {

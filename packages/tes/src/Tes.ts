@@ -52,8 +52,15 @@ class Tes {
     }
 
     static reportInterpreterError(error: InterpreterError) {
+        const { token, message } = error
+
         Tes.hasInterpreterError = true
-        this.report(error.token.line, '', error.message)
+
+        if (token.type === TokenKind.EOF) {
+            this.report(token.line, 'at end', message)
+        } else {
+            this.report(token.line, `at '${token.lexeme}'`, message)
+        }
     }
 
     static run(source: string) {

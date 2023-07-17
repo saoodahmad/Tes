@@ -4,6 +4,163 @@ import Parser from '../../src/parser/Parser'
 import Interpreter from '../../src/interpreter/Interpreter'
 
 describe('Expression tests', () => {
+    describe('Given: Incorrect program', () => {
+        it('Return interpreter error', () => {
+            Tes.reset()
+            const tokens = new Lexer(`
+                1 + " ";
+            `).lex()
+
+            expect(Tes.hasLexerError).toBe(false)
+
+            const parser = new Parser(tokens)
+
+            const program = parser.parse()
+
+            expect(Tes.hasParserError).toBe(false)
+
+            const interpreter = new Interpreter(program)
+
+            interpreter.interpret()
+
+            expect(Tes.hasInterpreterError).toBe(true)
+            expect(Tes.error.trimEnd()).toBe(
+                "[Line 2] Interpreter Error at '+': Operands must be two numbers or two strings."
+            )
+            expect(Tes.output.trimEnd()).toBe('')
+        })
+
+        // eslint-disable-next-line jest/no-identical-title
+        it('Return interpreter error', () => {
+            Tes.reset()
+            const tokens = new Lexer(`
+                1 - "hello";
+            `).lex()
+
+            expect(Tes.hasLexerError).toBe(false)
+
+            const parser = new Parser(tokens)
+
+            const program = parser.parse()
+
+            expect(Tes.hasParserError).toBe(false)
+
+            const interpreter = new Interpreter(program)
+
+            interpreter.interpret()
+
+            expect(Tes.hasInterpreterError).toBe(true)
+            expect(Tes.error.trimEnd()).toBe(
+                "[Line 2] Interpreter Error at '-': Operands must be two numbers."
+            )
+            expect(Tes.output).toBe('')
+        })
+
+        // eslint-disable-next-line jest/no-identical-title
+        it('Return interpreter error', () => {
+            Tes.reset()
+            const tokens = new Lexer(`
+                1 * "hello";
+            `).lex()
+
+            expect(Tes.hasLexerError).toBe(false)
+
+            const parser = new Parser(tokens)
+
+            const program = parser.parse()
+
+            expect(Tes.hasParserError).toBe(false)
+
+            const interpreter = new Interpreter(program)
+
+            interpreter.interpret()
+
+            expect(Tes.hasInterpreterError).toBe(true)
+            expect(Tes.error.trimEnd()).toBe(
+                "[Line 2] Interpreter Error at '*': Operands must be two numbers."
+            )
+            expect(Tes.output).toBe('')
+        })
+
+        // eslint-disable-next-line jest/no-identical-title
+        it('Return interpreter error', () => {
+            Tes.reset()
+            const tokens = new Lexer(`
+                    1 / "hello";
+                `).lex()
+
+            expect(Tes.hasLexerError).toBe(false)
+
+            const parser = new Parser(tokens)
+
+            const program = parser.parse()
+
+            expect(Tes.hasParserError).toBe(false)
+
+            const interpreter = new Interpreter(program)
+
+            interpreter.interpret()
+
+            expect(Tes.hasInterpreterError).toBe(true)
+            expect(Tes.error.trimEnd()).toBe(
+                "[Line 2] Interpreter Error at '/': Operands must be two numbers."
+            )
+            expect(Tes.output).toBe('')
+        })
+
+        // eslint-disable-next-line jest/no-identical-title
+        it('Return interpreter error', () => {
+            Tes.reset()
+            const tokens = new Lexer(`
+                    1 / 0;
+                `).lex()
+
+            expect(Tes.hasLexerError).toBe(false)
+
+            const parser = new Parser(tokens)
+
+            const program = parser.parse()
+
+            expect(Tes.hasParserError).toBe(false)
+
+            const interpreter = new Interpreter(program)
+
+            interpreter.interpret()
+
+            expect(Tes.hasInterpreterError).toBe(true)
+            expect(Tes.error.trimEnd()).toBe(
+                "[Line 2] Interpreter Error at '/': Cannot divide by zero."
+            )
+            expect(Tes.output).toBe('')
+        })
+
+        // eslint-disable-next-line jest/no-identical-title
+        it('Return interpreter error', () => {
+            Tes.reset()
+            const tokens = new Lexer(`
+                    1 %  "hello";
+                `).lex()
+
+            expect(Tes.hasLexerError).toBe(false)
+
+            const parser = new Parser(tokens)
+
+            const program = parser.parse()
+
+            expect(Tes.hasParserError).toBe(false)
+
+            const interpreter = new Interpreter(program)
+
+            interpreter.interpret()
+
+            expect(Tes.hasInterpreterError).toBe(true)
+            expect(Tes.error.trimEnd()).toBe(
+                "[Line 2] Interpreter Error at '%': Operands must be two numbers."
+            )
+            expect(Tes.output).toBe('')
+        })
+    })
+
     describe('Given: Correct program', () => {
         it('Return output', () => {
             Tes.reset()
