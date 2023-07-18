@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import PlayGround from '@/components/PlayGround';
+import { Analytics } from '@vercel/analytics/react'
 
 export default function Home() {
   return (
@@ -16,7 +17,7 @@ export default function Home() {
       <Header />
       <PlayGround />
     </div>
-
+    <Analytics />
     </main>
   );
 }
